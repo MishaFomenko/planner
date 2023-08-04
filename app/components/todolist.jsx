@@ -7,6 +7,9 @@ import Image from 'next/image'
 let idun;
 let localDays;
 let localId;
+if (localStorage===undefined) {
+    localStorage={}
+}
 
 const originalDate = new Date();
 const year = originalDate.getFullYear();

@@ -81,10 +81,10 @@ export default function ToDoList() {
             typein[dayid]='';
             idun++
 
-            // localDays = JSON.stringify(updatedtasks);
-            // localStorage.setItem('localDays', localDays);
-            // localId = JSON.stringify(idun);
-            // localStorage.setItem('localId', localId);
+            localDays = JSON.stringify(updatedtasks);
+            localStorage.setItem('localDays', localDays);
+            localId = JSON.stringify(idun);
+            localStorage.setItem('localId', localId);
 
             setDays(updatedtasks)
         }
@@ -106,8 +106,8 @@ export default function ToDoList() {
 
         // let newDate = [...date]
         // newDate[index] = event.target.value
-        // localDays = JSON.stringify(updatedDays);
-        // localStorage.setItem('localDays', localDays);
+        localDays = JSON.stringify(updatedDays);
+        localStorage.setItem('localDays', localDays);
         setDays(updatedDays)
         console.log(days)
     };
@@ -135,8 +135,8 @@ export default function ToDoList() {
             let dropid = parseInt(event.target.id);
             const foundday2 = updatedtasks.findIndex((obj) => obj.id === dropid);
             updatedtasks[foundday2].tasks.push(dragged[1])
-            // localDays = JSON.stringify(updatedtasks);
-            // localStorage.setItem('localDays', localDays);
+            localDays = JSON.stringify(updatedtasks);
+            localStorage.setItem('localDays', localDays);
             setDays(updatedtasks)
             setDragged(null)
         } else if (event.target.id==='bucket') {
@@ -147,8 +147,8 @@ export default function ToDoList() {
 
             let clearedtasks = updatedtasks[foundday].tasks.filter((task)=>task.id !== dragged[1].id)
             updatedtasks[foundday].tasks=clearedtasks;
-            // localDays = JSON.stringify(updatedtasks);
-            // localStorage.setItem('localDays', localDays);
+            localDays = JSON.stringify(updatedtasks);
+            localStorage.setItem('localDays', localDays);
             setDays(updatedtasks)
             setDragged(null)
         }
@@ -162,8 +162,8 @@ export default function ToDoList() {
         let cleareddays = updatedtasks.filter((day)=>day.id !== delid)
         updatedtasks=cleareddays;
 
-        // localDays = JSON.stringify(updatedtasks);
-        // localStorage.setItem('localDays', localDays);
+        localDays = JSON.stringify(updatedtasks);
+        localStorage.setItem('localDays', localDays);
 
         setDays(updatedtasks)
       }

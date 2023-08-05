@@ -18,6 +18,7 @@ let localDate=formattedDate;
 // let localDate;
 
 if (typeof window !== undefined) {
+    console.log(window)
     let localIdStr = localStorage.getItem('localId');
     localId = JSON.parse(localIdStr);
     if (localId===null) {

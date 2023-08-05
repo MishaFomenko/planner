@@ -7,9 +7,7 @@ import Image from 'next/image'
 let idun;
 let localDays;
 let localId;
-// if (localStorage===undefined) {
-//     localStorage={}
-// }
+
 
 const originalDate = new Date();
 const year = originalDate.getFullYear();
@@ -19,23 +17,32 @@ const formattedDate = `${year}-${month}-${day}`;
 let localDate=formattedDate;
 // let localDate;
 
-// let localIdStr = localStorage.getItem('localId');
-// localId = JSON.parse(localIdStr);
-// if (localId===null) {
-//     idun=0;
-// } 
-// idun=localId;
-idun=0;
+if (window !== undefined) {
+    let localIdStr = localStorage.getItem('localId');
+    localId = JSON.parse(localIdStr);
+    if (localId===null) {
+        idun=0;
+    }
+    idun=localId;
+    
+    let localDaysStr = localStorage.getItem('localDays');
+    localDays = JSON.parse(localDaysStr);
+    if (localDays===null || localDays?.length===0) {
+        localDays=[{id:idun, tasks:[], date:localDate}];
+    } 
 
-// let localDaysStr = localStorage.getItem('localDays');
-// localDays = JSON.parse(localDaysStr);
-// if (localDays===null || localDays?.length===0) {
-//     localDays=[{id:idun, tasks:[], date:localDate}];
-// } 
-localDays=[{id:idun, tasks:[], date:localDate}];
+
+} else {
+    idun=0;
+    localDays=[{id:idun, tasks:[], date:localDate}];
+}
 
 
-console.log(idun)
+
+
+
+
+
 export default function ToDoList() {
 
     

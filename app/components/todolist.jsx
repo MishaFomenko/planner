@@ -17,7 +17,7 @@ const formattedDate = `${year}-${month}-${day}`;
 let localDate=formattedDate;
 // let localDate;
 
-if (document !== undefined) {
+if (typeof window !== undefined) {
     let localIdStr = localStorage.getItem('localId');
     localId = JSON.parse(localIdStr);
     if (localId===null) {

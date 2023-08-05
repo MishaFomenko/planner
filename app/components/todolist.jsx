@@ -60,10 +60,10 @@ export default function ToDoList() {
             tasks: [],
             date: localDate
         })
-        // localDays = JSON.stringify(newDays);
-        // localStorage.setItem('localDays', localDays);
-        // localId = JSON.stringify(idun);
-        // localStorage.setItem('localId', localId);
+        localDays = JSON.stringify(newDays);
+        localStorage.setItem('localDays', localDays);
+        localId = JSON.stringify(idun);
+        localStorage.setItem('localId', localId);
         
         setDays(newDays)
         

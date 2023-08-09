@@ -1,5 +1,5 @@
 'use client'
-import { useState} from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 
 // let idcountdays = 0;
@@ -17,25 +17,13 @@ const formattedDate = `${year}-${month}-${day}`;
 let localDate=formattedDate;
 // let localDate;
 
-if (typeof window !== 'undefined') {
-    let localIdStr = localStorage.getItem('localId');
-    localId = JSON.parse(localIdStr);
-    if (localId===null) {
-        idun=0;
-    }
-    idun=localId;
+// if (typeof window !== 'undefined') {
     
-    let localDaysStr = localStorage.getItem('localDays');
-    localDays = JSON.parse(localDaysStr);
-    if (localDays===null || localDays?.length===0) {
-        localDays=[{id:idun, tasks:[], date:localDate}];
-    } 
 
-
-} else {
+// } else {
     idun=0;
     localDays=[{id:idun, tasks:[], date:localDate}];
-}
+// }
 
 
 
@@ -44,6 +32,21 @@ if (typeof window !== 'undefined') {
 
 
 export default function ToDoList() {
+
+    useEffect(()=>{
+        let localIdStr = localStorage.getItem('localId');
+        localId = JSON.parse(localIdStr);
+        if (localId===null) {
+            idun=0;
+        }
+        idun=localId;
+        
+        let localDaysStr = localStorage.getItem('localDays');
+        localDays = JSON.parse(localDaysStr);
+        if (localDays===null || localDays?.length===0) {
+            localDays=[{id:idun, tasks:[], date:localDate}];
+        } 
+    }, [])
 
     
     const [days, setDays] = useState(localDays);
@@ -187,7 +190,7 @@ export default function ToDoList() {
             <div 
             id={data.id}
             key={data.id} 
-            onDrop={(e)=>{}}
+            onDrop={()=>{}}
             // onDragOver={(e)=>{e.preventDefault()}}
             className='m-6 w-72 h-96 bg-green-200 rounded-lg relative'
             >

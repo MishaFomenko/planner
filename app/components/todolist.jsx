@@ -47,7 +47,7 @@ export default function ToDoList() {
         let localIdStr = localStorage.getItem('localId');
         localId = JSON.parse(localIdStr);
         if (localId===null) {
-            idun=0;
+            idun=9999999;
         }
         idun=localId;
         

@@ -21,8 +21,8 @@ let localDate=formattedDate;
     
 
 // } else {
-    // idun=0;
-    // localDays=[{id:idun, tasks:[], date:localDate}];
+    idun=0;
+    localDays=[{id:idun, tasks:[], date:localDate}];
 // }
 
 
@@ -33,7 +33,17 @@ let localDate=formattedDate;
 
 export default function ToDoList() {
 
+    
+
+    
+    const [days, setDays] = useState(localDays);
+    const [typein, setTypein] = useState(new Array(9999).fill(''));
+    // const [date, setDate] = useState(localDate);
+    const [dragged, setDragged] = useState(null);
+    // const [tasks, setTasks] = useState([]);
+
     useEffect(()=>{
+        
         let localIdStr = localStorage.getItem('localId');
         localId = JSON.parse(localIdStr);
         if (localId===null) {
@@ -46,14 +56,8 @@ export default function ToDoList() {
         if (localDays===null || localDays?.length===0) {
             localDays=[{id:idun, tasks:[], date:localDate}];
         } 
+        setDays(localDays)
     }, [])
-
-    
-    const [days, setDays] = useState(localDays);
-    const [typein, setTypein] = useState(new Array(9999).fill(''));
-    // const [date, setDate] = useState(localDate);
-    const [dragged, setDragged] = useState(null);
-    // const [tasks, setTasks] = useState([]);
 
     function onAddDay() {
         idun++

@@ -21,7 +21,7 @@ let localDate=formattedDate;
     
 
 // } else {
-    idun=0;
+    idun=9999999;
     localDays=[{id:idun, tasks:[], date:localDate}];
 // }
 

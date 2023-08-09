@@ -48,8 +48,10 @@ export default function ToDoList() {
         localId = JSON.parse(localIdStr);
         if (localId===null) {
             idun=9999999;
+        } else {
+            idun=localId;
         }
-        idun=localId;
+        
         
         let localDaysStr = localStorage.getItem('localDays');
         localDays = JSON.parse(localDaysStr);

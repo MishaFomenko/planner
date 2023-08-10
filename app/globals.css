@@ -2,4 +2,64 @@
 @tailwind components;
 @tailwind utilities;
 
+@media (max-width: 640px) {
+    .phone-total {
 
+    }
+    .phone-cards {
+      /* display: flex; */
+      /* flex-direction: column;
+      align-items: flex-start; */
+    }
+    .phone-current-card {
+        margin: 0.5rem;
+        width: 16rem;
+        height: 24rem;
+        background-color: rgb(187 247 208);
+        border-radius: 0.5rem;
+        position: relative;
+    }
+    .phone-empty-card {
+        margin: 0.5rem;
+        width: 16rem;
+        height: 24rem;
+        border-radius: 0.5rem;
+        border-width: 8px;
+        border-color: rgb(187 247 208);
+        border-style: dashed;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+    }
+    .phone-add-days {
+        margin: 3rem;
+
+    }
+    
+  }
+
+    .phone-one-card {
+        display: flex;
+        margin: 0.5rem;
+        width: 12.5rem;
+        height: 3rem;
+        background-color: rgb(187 247 208);
+        border-radius: 0.5rem;
+        position: relative;
+    }
+    .phone-addDay {
+        margin: 1.5rem;
+        padding: 0.5rem;
+        border-width: 2px;
+        border-color: rgb(187 247 208);
+    }
+
+    /* .large-one-card {
+        margin: 1.5rem;
+        width: 18rem;
+        height: 24rem;
+        background-color: rgb(187 247 208);
+        border-radius: 0.5rem;
+        position: relative;
+    } */

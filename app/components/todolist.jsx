@@ -406,12 +406,12 @@ export default function ToDoList() {
                 
                 
                 </div>  
-                : <>{currentDay===undefined 
+                : <>{small2large && currentDay===undefined 
                 ? 
                 <div className='col-start-2 phone-empty-card'>
                     <p className='text-center p-10 text-3xl text-green-400'>Choose a daycard to view</p>
                 </div>  
-                : <></>
+                : <><div className='h-10'></div></>
                 }
                 </>
                 }

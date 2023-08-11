@@ -15,7 +15,7 @@
         margin: 0.5rem;
         width: 16rem;
         height: 24rem;
-        background-color: rgb(187 247 208);
+        
         border-radius: 0.5rem;
         position: relative;
     }
@@ -23,10 +23,7 @@
         margin: 0.5rem;
         width: 16rem;
         height: 24rem;
-        border-radius: 0.5rem;
-        border-width: 8px;
-        border-color: rgb(187 247 208);
-        border-style: dashed;
+ 
         display: flex;
         justify-content: center;
         align-items: center;
@@ -44,15 +41,24 @@
         margin: 0.5rem;
         width: 12.5rem;
         height: 3rem;
-        background-color: rgb(187 247 208);
+        background-color: rgb(8 145 178);
         border-radius: 0.5rem;
+        border-width: 2px;
+        border-color: cyan;
         position: relative;
     }
     .phone-addDay {
         margin: 1.5rem;
         padding: 0.5rem;
         border-width: 2px;
-        border-color: rgb(187 247 208);
+        border-color: cyan;
+        z-index: 10;
+        
+    }
+
+    .bg-grad {
+        background: rgb(0,113,157);
+        background: linear-gradient(247deg, rgba(0,113,157,1) 0%, rgba(19,140,134,1) 38%, rgba(23,120,149,1) 72%, rgba(0,70,107,1) 100%);
     }
 
     /* .large-one-card {

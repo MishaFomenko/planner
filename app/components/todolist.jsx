@@ -108,14 +108,17 @@ export default function ToDoList() {
 }
 
     const deleteDay = (delid) => {
-    let updatedtasks = [...days]
-    let cleareddays = updatedtasks.filter((day)=>day.id !== delid)
-    updatedtasks=cleareddays;
+        if (days.length > 1) {
+            let updatedtasks = [...days]
+            let cleareddays = updatedtasks.filter((day)=>day.id !== delid)
+            updatedtasks=cleareddays;
 
-    localDays = JSON.stringify(updatedtasks);
-    localStorage.setItem('localDays', localDays);
+            localDays = JSON.stringify(updatedtasks);
+            localStorage.setItem('localDays', localDays);
 
-    setDays(updatedtasks)
+            setDays(updatedtasks)
+        }
+    
   }
 
     const drag = (day, task, event) => {
@@ -124,7 +127,7 @@ export default function ToDoList() {
 
     const drop = (event) => {
     // console.log(event.target)
-    if (event.target.nodeName==='DIV' || event.target.nodeName==='P') {
+    if (event.target.nodeName==='DIV' && event.target.id!=='bucket1' && event.target.id!=='bucket1') {
         let delid = dragged[0].id;
         let updatedtasks = [...days]
 
@@ -212,13 +215,13 @@ export default function ToDoList() {
             // onDragOver={(e)=>{e.preventDefault()}}
             onClick={()=>{setCurrentCard(data.id)}}
             // className='m-6 w-72 h-96 bg-green-200 rounded-lg relative'
-            className={small2large ? 'phone-one-card' : 'm-6 w-72 h-96 bg-green-200 rounded-lg relative'}
+            className={small2large ? 'phone-one-card' : 'm-6 w-72 h-96 bg-cyan-600 border-cyan-400 border-2 bg-opacity-50 rounded-lg relative'}
             >
                 {/* DATE INPUT */}
                 {small2large 
                 ?
                 <div className='flex w-full'>
-                    <p className='w-3/4 p-2.5 border-2 border-green-300 text-center'
+                    <p className='w-3/4 p-2.5 text-center'
                     id={data.id}
                     onDrop={(e)=>drop(e)}
                     onDragOver={(e)=>{e.preventDefault()}}
@@ -228,7 +231,7 @@ export default function ToDoList() {
                     <p className=' w-1/4 p-2.5 text-center '>({data.tasks.length})</p>
                 </div>
                 :
-                <input type="date" className='mt-2 ml-2 border-2 border-green-300 '
+                <input type="date" className='mt-2 ml-2 rounded-md border-2 border-cyan-300'
                 value={days[days.findIndex((obj) => obj.id == data.id)].date} onChange={(e)=>{handleChangeDate(data.id, e)}}/>
                 }
 
@@ -266,7 +269,7 @@ export default function ToDoList() {
 
                 {/* INPUT FIELD FOR TASKS */}
                 <div>
-                    <input className='ml-6 border-2 border-green-300' type="text"
+                    <input className='ml-6 border-2 rounded-md border-cyan-400' type="text"
                     key={data.id}
                     value={typein[data.id]}
                     onChange={(e)=>{handleChangeTask(data.id, e)}}
@@ -275,7 +278,7 @@ export default function ToDoList() {
 
                 {/* TASK INPUT BUTTON */}
                 <div>
-                    <button className='p-1 mt-3 ml-6 bg-gray-300 rounded-lg'
+                    <button className='p-1 mt-3 ml-6 bg-cyan-600 rounded-lg border-cyan-400 border-2'
                     onClick={onAddTask.bind(null, data.id)}
                     key={data.id}
                     
@@ -307,17 +310,22 @@ export default function ToDoList() {
         <>
         <div onDrop={()=>setDragged(null)}
         onDragOver={(e)=>{e.preventDefault()}}
+        className='bg-grad min-h-screen'
         >
 
             {/* TASKS DUMPSTER */}
             <div className='w-screen flex justify-center'>
                 
-                <div className='w-48 mt-3 p-3 rounded-lg border-grey-200 border-4 border-dashed duration-500 ' style={{borderColor: dragged!==null ? 'red' : ''}}
+                <div className='w-48 mt-3 p-3 rounded-lg border-cyan-200 border-4 border-dashed duration-500 z-10' style={{borderColor: dragged!==null ? 'red' : ''}}
                 id={"bucket1"}
                 onDrop={(e)=>drop(e)}
                 onDragOver={(e)=>{e.preventDefault()}}
                 >
-                    <button className='rounded-lg'> 
+                    <p className='text-cyan-200 text-xl text-center duration-500' 
+                    
+                    id={"bucket2"}>Tasks dumpster
+                    </p>
+                    {/* <button className='rounded-lg'> 
                             <Image 
                             className='mx-14 duration-500'
                             style={{opacity: dragged!==null ? 1 : 0.3}}
@@ -325,18 +333,18 @@ export default function ToDoList() {
                             onDrop={(e)=>drop(e)}
                             onDragOver={(e)=>{e.preventDefault()}}
                             src='/images/delete.png' width={40} height={40} alt=''></Image> 
-                    </button>
+                    </button> */}
                 </div>
                 
             </div>
             
             <div className={small2large ? 'grid grid-columns-2' : 'flex flex-wrap'}>
-                <div className={small2large ? '' : 'flex flex-wrap justify-center'}
+                <div className={small2large ? 'z-10' : 'flex flex-wrap justify-center z-10'}
                 >
                     {dayscards} 
                     
                     <button className={small2large ? 'phone-addDay' : 
-                    'phone-add-days item-center mt-24 ml-6 w-52 h-52 border-green-300 border-8 border-dashed rounded-lg hover:bg-green-300 duration-500'}
+                    'phone-add-days item-center mt-24 ml-6 w-52 h-52 border-cyan-200 border-8 border-dashed rounded-lg hover:bg-green-300 duration-500'}
                     onClick={onAddDay}>Add new day +</button>
 
                 </div>
@@ -352,11 +360,11 @@ export default function ToDoList() {
                 onDrop={()=>{}}
                 onClick={()=>{setCurrentCard(currentDay.id)}}
 
-                className='col-start-2 phone-current-card'
+                className='col-start-2 phone-current-card bg-cyan-600 border-2 border-cyan-200'
                 >
                 {/* DATE INPUT */}
                 
-                <input type="date" className='mt-2 ml-2 border-2 border-green-300 '
+                <input type="date" className='mt-2 ml-2 border-2 rounded-md border-cyan-400'
                 value={currentDay.date} onChange={(e)=>{handleChangeDate(currentDay.id, e)}}/>
                 
 
@@ -388,7 +396,7 @@ export default function ToDoList() {
 
                 {/* INPUT FIELD FOR TASKS */}
                 <div>
-                    <input className='ml-6 border-2 border-green-300' type="text"
+                    <input className='ml-6 border-2 border-cyan-400 rounded-md' type="text"
                     key={currentDay.id}
                     value={typein[currentDay.id]}
                     onChange={(e)=>{handleChangeTask(currentDay.id, e)}}
@@ -397,7 +405,7 @@ export default function ToDoList() {
 
                 {/* TASK INPUT BUTTON */}
                 <div>
-                    <button className='p-1 mt-3 ml-6 bg-gray-300 rounded-lg'
+                    <button className='p-1 mt-3 ml-6 bg-cyan-600 rounded-lg border-2 border-cyan-400'
                     onClick={onAddTask.bind(null, currentDay.id)}
                     key={currentDay.id}
                     
@@ -408,8 +416,8 @@ export default function ToDoList() {
                 </div>  
                 : <>{small2large && currentDay===undefined 
                 ? 
-                <div className='col-start-2 phone-empty-card'>
-                    <p className='text-center p-10 text-3xl text-green-400'>Choose a daycard to view</p>
+                <div className='col-start-2 phone-empty-card border-8 rounded-lg border-dashed border-cyan-200'>
+                    <p className='text-center p-10 text-3xl text-cyan-400'>Choose a daycard to view</p>
                 </div>  
                 : <><div className='h-10'></div></>
                 }

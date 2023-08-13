@@ -2,18 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-@media (max-width: 640px) {
-    .phone-total {
-
-    }
-    .phone-cards {
-      /* display: flex; */
-      /* flex-direction: column;
-      align-items: flex-start; */
-    }
+  @media (width<680px) {
+ 
     .phone-current-card {
         margin: 0.5rem;
-        width: 16rem;
+        width: 60vw;
         height: 24rem;
         
         border-radius: 0.5rem;
@@ -21,7 +14,8 @@
     }
     .phone-empty-card {
         margin: 0.5rem;
-        width: 16rem;
+        width: 60vw;
+        /* width: 15rem; */
         height: 24rem;
  
         display: flex;
@@ -34,38 +28,32 @@
 
     }
     
-  }
+  
 
     .phone-one-card {
-        display: flex;
+     
         margin: 0.5rem;
-        width: 12.5rem;
+        
+        width: 25vw;
         height: 3rem;
         background-color: rgb(8 145 178);
         border-radius: 0.5rem;
         border-width: 2px;
         border-color: cyan;
-        position: relative;
-    }
+        }
     .phone-addDay {
-        margin: 1.5rem;
+        max-width: 25vw;
+        min-width: 20vw;
+        margin: 0.5rem;
         padding: 0.5rem;
         border-width: 2px;
         border-color: cyan;
         z-index: 10;
         
     }
+}
 
     .bg-grad {
         background: rgb(0,113,157);
         background: linear-gradient(247deg, rgba(0,113,157,1) 0%, rgba(19,140,134,1) 38%, rgba(23,120,149,1) 72%, rgba(0,70,107,1) 100%);
     }
-
-    /* .large-one-card {
-        margin: 1.5rem;
-        width: 18rem;
-        height: 24rem;
-        background-color: rgb(187 247 208);
-        border-radius: 0.5rem;
-        position: relative;
-    } */

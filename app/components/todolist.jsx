@@ -188,7 +188,7 @@ export default function ToDoList() {
     }
   };
 
-    let small2large = windowWidth <= 640;
+    let small2large = windowWidth <= 680;
 
     let dayscards = days.map((data) => {
 
@@ -221,14 +221,14 @@ export default function ToDoList() {
                 {small2large 
                 ?
                 <div className='flex w-full'>
-                    <p className='w-3/4 p-2.5 text-center'
+                    <p className='w-2/3 pt-2.5 text-center'
                     id={data.id}
                     onDrop={(e)=>drop(e)}
                     onDragOver={(e)=>{e.preventDefault()}}
                     >
-                        {days[days.findIndex((obj) => obj.id == data.id)].date}
+                        {days[days.findIndex((obj) => obj.id == data.id)].date.substring(5)}
                     </p>
-                    <p className=' w-1/4 p-2.5 text-center '>({data.tasks.length})</p>
+                    <p className=' w-1/3 pt-2.5 text-center'>[{data.tasks.length}]</p>
                 </div>
                 :
                 <input type="date" className='mt-2 ml-2 rounded-md border-2 border-cyan-300'
@@ -339,9 +339,10 @@ export default function ToDoList() {
             </div>
             
             <div className={small2large ? 'grid grid-columns-2' : 'flex flex-wrap'}>
-                <div className={small2large ? 'z-10' : 'flex flex-wrap justify-center z-10'}
+                <div className={small2large ? 'z-10 flex flex-col items-center' : 'flex flex-wrap justify-center z-10'}
                 >
-                    {dayscards} 
+                    {dayscards}
+                    
                     
                     <button className={small2large ? 'phone-addDay' : 
                     'phone-add-days item-center mt-24 ml-6 w-52 h-52 border-cyan-200 border-8 border-dashed rounded-lg hover:bg-green-300 duration-500'}
@@ -350,10 +351,6 @@ export default function ToDoList() {
                 </div>
                 {(small2large && currentDay!==undefined)
                 ? 
-                // <div className='col-start-2 phone-current-card'>
-                //         <p className='p-24'>hello world</p>
-                // </div>
-                
                 <div 
                 id={currentDay.id}
                 key={currentDay.id} 

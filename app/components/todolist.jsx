@@ -1,6 +1,13 @@
 'use client'
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
+import DateInput from './dateinput'
+import DeleteButton from './deletebutton'
+import TaskList from './tasklist'
+import TaskInput from './taskinput'
+import TaskInputButton from './taskinputbutton'
+import DayList from './daylist'
+import TaskDumpster from './taskdumpster'
 
 
 let idun;
@@ -188,123 +195,37 @@ export default function ToDoList() {
     }
   };
 
-    let small2large = windowWidth <= 680;
-
-    let dayscards = days.map((data) => {
-
-        // TASKS FOR THE CARDS
-        let taskscards=[];
-        if (data.tasks?.length > 0) {
-            taskscards = data.tasks.map((task, ind) => {
-            return <li 
-            className='px-2 py-1 mb-2 rounded-2xl bg-green-400'
-            key={task.id}
-            id={task.id}
-            draggable={true}
-            onDragStart={(e)=>{drag(data, task, e)}}> 
-            {1+ind + '. ' + task.text} 
-            </li>
-            })
-        } else {taskscards=<li></li>}
-        
-        return (
-            <div 
-            id={data.id}
-            key={data.id} 
-            // onDrop={(e)=>drop(e)}
-            // onDragOver={(e)=>{e.preventDefault()}}
-            onClick={()=>{setCurrentCard(data.id)}}
-            // className='m-6 w-72 h-96 bg-green-200 rounded-lg relative'
-            className={small2large ? 'phone-one-card' : 'm-6 w-72 h-96 bg-cyan-600 border-cyan-400 border-2 bg-opacity-50 rounded-lg relative'}
-            >
-                {/* DATE INPUT */}
-                {small2large 
-                ?
-                <div className='flex w-full'>
-                    <p className='w-2/3 pt-2.5 text-center'
-                    id={data.id}
-                    onDrop={(e)=>drop(e)}
-                    onDragOver={(e)=>{e.preventDefault()}}
-                    >
-                        {days[days.findIndex((obj) => obj.id == data.id)].date.substring(5)}
-                    </p>
-                    <p className=' w-1/3 pt-2.5 text-center'>[{data.tasks.length}]</p>
-                </div>
-                :
-                <input type="date" className='mt-2 ml-2 rounded-md border-2 border-cyan-300'
-                value={days[days.findIndex((obj) => obj.id == data.id)].date} onChange={(e)=>{handleChangeDate(data.id, e)}}/>
-                }
-
-                {small2large
-                ? <></>
-                :
-                <button className='bg-red-300 absolute right-0 p-1 m-3 rounded-lg'>
-                    <Image 
-                    onDrop={(e)=>drop(e)}
-                    onDragOver={(e)=>{e.preventDefault()}}
-                    src='/images/delete.png' width={20} height={20} alt=''
-                    onClick={()=>deleteDay(data.id)}>
-                    </Image>
-                </button>
-                }   
-                
-                {small2large 
-                ? <></>
-                : <>
-                {/* TASK LIST ELEMENT */}
-                <div 
-                className=' h-4/6'
-                id={data.id}
-                onDrop={(e)=>drop(e)}
-                onDragOver={(e)=>{e.preventDefault()}}
-                >
-                    <ul 
-                    className='p-3' 
-                    id={data.id}
-                    onDrop={()=>{}}
-                    >
-                        {taskscards}
-                    </ul>
-                </div>
-
-                {/* INPUT FIELD FOR TASKS */}
-                <div>
-                    <input className='ml-6 border-2 rounded-md border-cyan-400' type="text"
-                    key={data.id}
-                    value={typein[data.id]}
-                    onChange={(e)=>{handleChangeTask(data.id, e)}}
-                    onKeyDown={(e)=>{handleKeyPress(data.id, e)}}/>
-                </div>
-
-                {/* TASK INPUT BUTTON */}
-                <div>
-                    <button className='p-1 mt-3 ml-6 bg-cyan-600 rounded-lg border-cyan-400 border-2'
-                    onClick={onAddTask.bind(null, data.id)}
-                    key={data.id}
-                    
-                    >Add new task +</button>
-                </div></>
-                }
-                
-            </div>  
-        )
-        
-    })
-
-    // TASKS FOR THE CARDS
-    let taskscards=[];
-    if (small2large && currentDay!==undefined && currentDay.tasks?.length > 0) {
-        taskscards = currentDay.tasks.map((task, ind) => {
+    const tasks = (someday, condition) => {
+    let tasklist = <></>;
+    if (condition) {
+        tasklist = someday.tasks.map((task, ind) => {
         return <li 
         className='px-2 py-1 mb-2 rounded-2xl bg-green-400'
         key={task.id}
         id={task.id}
         draggable={true}
-        onDragStart={(e)=>{drag(currentDay, task, e)}}> 
+        onDragStart={(e)=>{drag(someday, task, e)}}> 
         {1+ind + '. ' + task.text} 
         </li>
         })
-    } else {taskscards=<li></li>}
+    } else {tasklist=<li></li>}
+    return tasklist;
+
+  }
+
+    let small2large = windowWidth <= 680;
+
+    let dayscards = days.map((data) => {
+
+        let taskscards=tasks(data, data.tasks?.length > 0)
+
+        return (
+             <DayList key={data.id} data={data} screenCondition={small2large} typein={typein} days={days} drop={drop} handleChangeDate={handleChangeDate} deleteDay={deleteDay} taskscards={taskscards} handleChangeTask={handleChangeTask} handleKeyPress={handleKeyPress} onAddTask={onAddTask} setCurrentCard={setCurrentCard}/>
+        )
+        
+    })
+
+    let taskscards=tasks(currentDay, small2large && currentDay!==undefined && currentDay.tasks?.length > 0)
 
     return (
         <>
@@ -313,30 +234,7 @@ export default function ToDoList() {
         className='bg-grad min-h-screen'
         >
 
-            {/* TASKS DUMPSTER */}
-            <div className='w-screen flex justify-center'>
-                
-                <div className='w-48 mt-3 p-3 rounded-lg border-cyan-200 border-4 border-dashed duration-500 z-10' style={{borderColor: dragged!==null ? 'red' : ''}}
-                id={"bucket1"}
-                onDrop={(e)=>drop(e)}
-                onDragOver={(e)=>{e.preventDefault()}}
-                >
-                    <p className='text-cyan-200 text-xl text-center duration-500' 
-                    
-                    id={"bucket2"}>Tasks dumpster
-                    </p>
-                    {/* <button className='rounded-lg'> 
-                            <Image 
-                            className='mx-14 duration-500'
-                            style={{opacity: dragged!==null ? 1 : 0.3}}
-                            id={"bucket2"}
-                            onDrop={(e)=>drop(e)}
-                            onDragOver={(e)=>{e.preventDefault()}}
-                            src='/images/delete.png' width={40} height={40} alt=''></Image> 
-                    </button> */}
-                </div>
-                
-            </div>
+            <TaskDumpster dragged={dragged} drop={drop}/>
             
             <div className={small2large ? 'grid grid-columns-2' : 'flex flex-wrap'}>
                 <div className={small2large ? 'z-10 flex flex-col items-center' : 'flex flex-wrap justify-center z-10'}

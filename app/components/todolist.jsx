@@ -8,6 +8,10 @@ import TaskInput from './taskinput'
 import TaskInputButton from './taskinputbutton'
 import DayList from './daylist'
 import TaskDumpster from './taskdumpster'
+import CurrentDay from './currentday'
+import EmptyDay from './emptyday'
+import AddNewDay from './addnewday'
+
 
 
 let idun;
@@ -240,80 +244,16 @@ export default function ToDoList() {
                 <div className={small2large ? 'z-10 flex flex-col items-center' : 'flex flex-wrap justify-center z-10'}
                 >
                     {dayscards}
-                    
-                    
-                    <button className={small2large ? 'phone-addDay' : 
-                    'phone-add-days item-center mt-24 ml-6 w-52 h-52 border-cyan-200 border-8 border-dashed rounded-lg hover:bg-green-300 duration-500'}
-                    onClick={onAddDay}>Add new day +</button>
+
+                    <AddNewDay screenCondition={small2large} onAddDay={onAddDay}/>
 
                 </div>
                 {(small2large && currentDay!==undefined)
                 ? 
-                <div 
-                id={currentDay.id}
-                key={currentDay.id} 
-                onDrop={()=>{}}
-                onClick={()=>{setCurrentCard(currentDay.id)}}
-
-                className='col-start-2 phone-current-card bg-cyan-600 border-2 border-cyan-200'
-                >
-                {/* DATE INPUT */}
-                
-                <input type="date" className='mt-2 ml-2 border-2 rounded-md border-cyan-400'
-                value={currentDay.date} onChange={(e)=>{handleChangeDate(currentDay.id, e)}}/>
-                
-
-                <button className='bg-red-300 absolute right-0 p-1 m-3 rounded-lg'>
-                    <Image 
-                    onDrop={(e)=>drop(e)}
-                    onDragOver={(e)=>{e.preventDefault()}}
-                    src='/images/delete.png' width={20} height={20} alt=''
-                    onClick={()=>deleteDay(currentDay.id)}>
-                    </Image>
-                </button>
-                
-                
-                {/* TASK LIST ELEMENT */}
-                <div 
-                className=' h-4/6'
-                id={currentDay.id}
-                onDrop={(e)=>drop(e)}
-                onDragOver={(e)=>{e.preventDefault()}}
-                >
-                    <ul 
-                    className='p-3' 
-                    id={currentDay.id}
-                    onDrop={()=>{}}
-                    >
-                        {taskscards}
-                    </ul>
-                </div>
-
-                {/* INPUT FIELD FOR TASKS */}
-                <div>
-                    <input className='ml-6 border-2 border-cyan-400 rounded-md' type="text"
-                    key={currentDay.id}
-                    value={typein[currentDay.id]}
-                    onChange={(e)=>{handleChangeTask(currentDay.id, e)}}
-                    onKeyDown={(e)=>{handleKeyPress(currentDay.id, e)}}/>
-                </div>
-
-                {/* TASK INPUT BUTTON */}
-                <div>
-                    <button className='p-1 mt-3 ml-6 bg-cyan-600 rounded-lg border-2 border-cyan-400'
-                    onClick={onAddTask.bind(null, currentDay.id)}
-                    key={currentDay.id}
-                    
-                    >Add new task +</button>
-                </div>
-                
-                
-                </div>  
+                <CurrentDay currentDay={currentDay} taskscards={taskscards}  typein={typein} setCurrentCard={setCurrentCard} handleChangeDate={handleChangeDate} drop={drop} deleteDay={deleteDay} handleChangeTask={handleChangeTask} handleKeyPress={handleKeyPress} onAddTask={onAddTask}/>
                 : <>{small2large && currentDay===undefined 
                 ? 
-                <div className='col-start-2 phone-empty-card border-8 rounded-lg border-dashed border-cyan-200'>
-                    <p className='text-center p-10 text-3xl text-cyan-400'>Choose a daycard to view</p>
-                </div>  
+                <EmptyDay />
                 : <><div className='h-10'></div></>
                 }
                 </>

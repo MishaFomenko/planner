@@ -4,7 +4,7 @@ import TaskList from './tasklist'
 import TaskInput from './taskinput'
 import TaskInputButton from './taskinputbutton'
 
-export default function DayList({ data, screenCondition, typein, days, drop, handleChangeDate, deleteDay, taskscards, handleChangeTask, handleKeyPress, onAddTask, setCurrentCard}) {
+export default function DayList({ data, screenCondition, days, drop, handleChangeDate, deleteDay, taskscards, handleKeyPress, onAddTask, setCurrentCard}) {
     return(
     
         <div 
@@ -23,7 +23,7 @@ export default function DayList({ data, screenCondition, typein, days, drop, han
             : <>
             <TaskList data={data} taskscards={taskscards} drop={drop}/>
 
-            <TaskInput data={data} typein={typein} handleChangeTask={handleChangeTask} handleKeyPress={handleKeyPress}/>
+            <TaskInput data={data} handleKeyPress={handleKeyPress}/>
 
             <TaskInputButton data={data} onAddTask={onAddTask} />
             </>

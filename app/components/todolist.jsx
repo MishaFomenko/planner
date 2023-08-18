@@ -5,100 +5,82 @@ import TaskDumpster from './taskdumpster'
 import CurrentDay from './currentday'
 import EmptyDay from './emptyday'
 import AddNewDay from './addnewday'
+import { useStatesContext } from '../context/statescontext'
+import { windowTrack, getLocals } from '../lib/setupActions'
 
 
 
-let idun;
+
+
+
 let localDays;
 let localId;
 
 
-const originalDate = new Date();
-const year = originalDate.getFullYear();
-const month = String(originalDate.getMonth() + 1).padStart(2, "0");
-const day = String(originalDate.getDate()).padStart(2, "0");
-const formattedDate = `${year}-${month}-${day}`;
-let localDate=formattedDate;
-
-
-idun=9999999;
-localDays=[{id:idun, tasks:[], date:localDate}];
-
-
 export default function ToDoList() {
 
+    const {dragged, setDragged, windowWidth, setWindowWidth, days, setDays, currentCard, setCurrentCard, idun, setIdun, initDate} = useStatesContext();
 
-    const [windowWidth, setWindowWidth] = useState(1440);
-
-  useEffect(() => {
-    setWindowWidth(window.innerWidth)
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
+    useEffect(() => {
+        windowTrack(setWindowWidth)
+    }, []);
 
 
-  useEffect(()=>{
+    useEffect(()=>{
+
+        let localDaysStr = localStorage.getItem('localDays');
+        let initDays = JSON.parse(localDaysStr);
+        if (initDays!==null) {
+            setDays(initDays)
+        }
         
-    let localIdStr = localStorage.getItem('localId');
-    localId = JSON.parse(localIdStr);
-    if (localId===null) {
-        idun=9999999;
-    } else {
-        idun=localId;
-    }
+        let localId = localStorage.getItem('localId');
+        let strId = JSON.parse(localId);
+        
+        if (strId!==null){
+            setIdun(parseInt(strId)+1)
+        }
+    }, [])
+
     
-    let localDaysStr = localStorage.getItem('localDays');
-    localDays = JSON.parse(localDaysStr);
-    if (localDays===null || localDays?.length===0) {
-        localDays=[{id:idun, tasks:[], date:localDate}];
-    } 
-    setDays(localDays)
-}, [])
+    
 
 
-    const [days, setDays] = useState(localDays);
-    const [typein, setTypein] = useState(new Array(9999).fill(''));
-    const [dragged, setDragged] = useState(null);
-    const [currentCard, setCurrentCard] = useState(days[0].id)
-    
+
+
     let currentDayIndex = days.findIndex((el)=>el.id===currentCard)
     let currentDay = days[currentDayIndex]
-
+    
+    
     
 
 
     const onAddDay = () => {
-        idun++
+        setIdun(prev=>prev+1)
     let newDays = [...days]
     newDays.push({
         id: idun,
         tasks: [],
-        date: localDate
+        date: initDate
     })
-    localDays = JSON.stringify(newDays);
+    let localDays = JSON.stringify(newDays);
     localStorage.setItem('localDays', localDays);
     localId = JSON.stringify(idun);
     localStorage.setItem('localId', localId);
     setDays(newDays)
 }
 
-    const onAddTask = (dayid) => {
-    if (typein[dayid]!=='') {
+    const onAddTask = (dayid, event) => {
+    if (event.target.value!=='' && event.target.value!=='undefined') {
         let updatedtasks = [...days]
         const foundday = updatedtasks.findIndex((obj) => obj.id === dayid);
         updatedtasks[foundday].tasks.push({
             id: idun,
-            text: typein[dayid]
+            text: event.target.value
         })
         
-        typein[dayid]='';
-        idun++
+        event.target.value='';
+        setIdun(prev=>prev+1)
 
         localDays = JSON.stringify(updatedtasks);
         localStorage.setItem('localDays', localDays);
@@ -128,7 +110,6 @@ export default function ToDoList() {
 }
 
     const drop = (event) => {
-    // console.log(event.target)
     if (event.target.nodeName==='DIV' && event.target.id!=='bucket1' && event.target.id!=='bucket1') {
         let delid = dragged[0].id;
         let updatedtasks = [...days]
@@ -162,11 +143,7 @@ export default function ToDoList() {
     
   }
 
-    const handleChangeTask = (index, event) => {
-    let newTypein = [...typein]
-    newTypein[index] = event.target.value
-    setTypein(newTypein)
-};
+ 
 
     const handleChangeDate = (index, event) => {
     
@@ -186,7 +163,7 @@ export default function ToDoList() {
 
     const handleKeyPress = (id, event) => {
     if (event.key === 'Enter' || event.keyCode === 13) {
-      onAddTask(id);
+      onAddTask(id, event);
     }
   };
 
@@ -215,7 +192,7 @@ export default function ToDoList() {
         let taskscards=tasks(data, data.tasks?.length > 0)
 
         return (
-             <DayList key={data.id} data={data} screenCondition={small2large} typein={typein} days={days} drop={drop} handleChangeDate={handleChangeDate} deleteDay={deleteDay} taskscards={taskscards} handleChangeTask={handleChangeTask} handleKeyPress={handleKeyPress} onAddTask={onAddTask} setCurrentCard={setCurrentCard}/>
+             <DayList key={data.id} data={data} screenCondition={small2large} days={days} drop={drop} handleChangeDate={handleChangeDate} deleteDay={deleteDay} taskscards={taskscards} handleKeyPress={handleKeyPress} onAddTask={onAddTask} setCurrentCard={setCurrentCard}/>
         )
         
     })

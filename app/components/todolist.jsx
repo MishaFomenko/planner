@@ -1,11 +1,5 @@
 'use client'
 import { useState, useEffect } from 'react'
-import Image from 'next/image'
-import DateInput from './dateinput'
-import DeleteButton from './deletebutton'
-import TaskList from './tasklist'
-import TaskInput from './taskinput'
-import TaskInputButton from './taskinputbutton'
 import DayList from './daylist'
 import TaskDumpster from './taskdumpster'
 import CurrentDay from './currentday'
@@ -91,10 +85,7 @@ export default function ToDoList() {
     localStorage.setItem('localDays', localDays);
     localId = JSON.stringify(idun);
     localStorage.setItem('localId', localId);
-    
     setDays(newDays)
-    
-
 }
 
     const onAddTask = (dayid) => {

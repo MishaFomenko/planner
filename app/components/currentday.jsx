@@ -1,7 +1,7 @@
 import Image from 'next/image'
 
 
-export default function CurrentDay({ currentDay, taskscards, typein, setCurrentCard, handleChangeDate, drop, deleteDay, handleChangeTask, handleKeyPress, onAddTask }) {
+export default function CurrentDay({ currentDay, taskscards, typein, setCurrentCard, handleChangeDate, drop, deleteDay, handleKeyPress, onAddTask }) {
     return (
         <>
             <div 
@@ -48,8 +48,9 @@ export default function CurrentDay({ currentDay, taskscards, typein, setCurrentC
                 <div>
                     <input className='ml-6 border-2 border-cyan-400 rounded-md' type="text"
                     key={currentDay.id}
-                    value={typein[currentDay.id]}
-                    onChange={(e)=>{handleChangeTask(currentDay.id, e)}}
+                    // value={typein[currentDay.id]}
+                    // onChange={()=>{}}
+                    // onChange={(e)=>{handleChangeTask(currentDay.id, e)}}
                     onKeyDown={(e)=>{handleKeyPress(currentDay.id, e)}}/>
                 </div>
 

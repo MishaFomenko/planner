@@ -19,7 +19,7 @@ let localId;
 
 export default function ToDoList() {
 
-    const {dragged, setDragged, windowWidth, setWindowWidth, days, setDays, currentCard, setCurrentCard, idun, setIdun, initDate} = useStatesContext();
+    const {dragged, setDragged, windowWidth, setWindowWidth, days, setDays, currentCard, setCurrentCard, idun, setIdun, initDate, typein, handleChangeTask} = useStatesContext();
 
     useEffect(() => {
         windowTrack(setWindowWidth)
@@ -190,9 +190,9 @@ export default function ToDoList() {
     let dayscards = days.map((data) => {
 
         let taskscards=tasks(data, data.tasks?.length > 0)
-
+ 
         return (
-             <DayList key={data.id} data={data} screenCondition={small2large} days={days} drop={drop} handleChangeDate={handleChangeDate} deleteDay={deleteDay} taskscards={taskscards} handleKeyPress={handleKeyPress} onAddTask={onAddTask} setCurrentCard={setCurrentCard}/>
+             <DayList key={data.id} data={data} screenCondition={small2large} days={days} drop={drop} handleChangeDate={handleChangeDate} deleteDay={deleteDay} taskscards={taskscards} handleKeyPress={handleKeyPress} onAddTask={onAddTask} setCurrentCard={setCurrentCard} />
         )
         
     })
